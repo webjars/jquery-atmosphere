@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>jquery-atmosphere</artifactId>
-    <version>1.0.2-2-SNAPSHOT</version>
+    <version>1.0.18-SNAPSHOT</version>
     <name>jQuery Atmosphere</name>
     <description>WebJar for jQuery Atmosphere</description>
     <url>http://webjars.org</url>
@@ -41,8 +41,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstreamVersion>1.0.2</upstreamVersion>
-        <sourceUrl>https://raw.github.com/Atmosphere/atmosphere/atmosphere-project-${upstreamVersion}/modules/jquery/src/main/webapp/jquery</sourceUrl>
+        <upstreamVersion>1.0.18</upstreamVersion>
         <destinationDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstreamVersion}</destinationDir>
     </properties>
 
@@ -57,18 +56,45 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>wagon-maven-plugin</artifactId>
-                <version>1.0-beta-4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.atmosphere</groupId>
+                            <artifactId>atmosphere-jquery</artifactId>
+                            <version>${upstreamVersion}</version>
+                            <type>war</type>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>download-js</id>
+                        <id>unpack</id>
                         <phase>process-resources</phase>
-                        <goals><goal>download-single</goal></goals>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                         <configuration>
-                            <url>${sourceUrl}</url>
-                            <fromFile>jquery.atmosphere.js</fromFile>
-                            <toDir>${destinationDir}</toDir>
+                            <target>
+                                <echo message="moving resources" />
+                                <move todir="${destinationDir}">
+                                    <fileset dir="${project.build.directory}/dependency/jquery" includes="jquery.atmosphere*" />
+                                </move>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
@@ -86,35 +112,5 @@
             </resource>
         </resources>
     </build>
-
-    <profiles>
-        <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.2</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
     
 </project>
