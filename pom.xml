@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>jquery-atmosphere</artifactId>
-    <version>1.0.19-SNAPSHOT</version>
+    <version>2.0.3-SNAPSHOT</version>
     <name>jQuery Atmosphere</name>
     <description>WebJar for jQuery Atmosphere</description>
     <url>http://webjars.org</url>
@@ -41,7 +41,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstreamVersion>1.0.18</upstreamVersion>
+        <upstreamVersion>2.0.3</upstreamVersion>
         <destinationDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstreamVersion}</destinationDir>
     </properties>
 
@@ -62,8 +62,8 @@
                 <configuration>
                     <artifactItems>
                         <artifactItem>
-                            <groupId>org.atmosphere</groupId>
-                            <artifactId>atmosphere-jquery</artifactId>
+                            <groupId>org.atmosphere.client</groupId>
+                            <artifactId>jquery</artifactId>
                             <version>${upstreamVersion}</version>
                             <type>war</type>
                         </artifactItem>
