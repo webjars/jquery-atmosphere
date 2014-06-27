@@ -18,11 +18,12 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <upstreamVersion>2.1.5</upstreamVersion>
+        <upstreamVersion>2.1.6</upstreamVersion>
         <destinationDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${upstreamVersion}</destinationDir>
         <requirejs>
             {
-                "shim": { "jquery.atmosphere": [ "jquery" ] }
+                "paths": { "jquery-atmosphere": "jquery.atmosphere" },
+                "shim": { "jquery-atmosphere": [ "jquery" ] }
             }
         </requirejs>
     </properties>
@@ -54,7 +55,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>1.8.2</version>
+            <version>1.11.1</version>
         </dependency>
     </dependencies>
 
